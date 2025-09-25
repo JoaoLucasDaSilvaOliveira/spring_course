@@ -1,0 +1,28 @@
+### SALVAR PRODUTOS - AULA 02
+POST localhost:8080/produtos
+Content-Type: application/json
+
+{
+    "nome" : "Pendrive",
+    "descricao": "Pendrive da marca x",
+    "preco" : 20
+}
+
+### OBTER POR ID - AULA 05
+GET localhost:8080/produtos/9ef17085-3e78-466d-aead-e8e4fd33dd48
+
+### DELETADO POR ID - AULA 06
+DELETE localhost:8080/produtos/9ef17085-3e78-466d-aead-e8e4fd33dd48
+
+### ATUALIZANDO POR ID - AULA 07
+PUT localhost:8080/produtos/9ef17085-3e78-466d-aead-e8e4fd33dd48
+Content-Type: application/json
+
+{
+  "nome" : "Pendrive A",
+  "descricao": "Pendrive da marca x atualizado",
+  "preco": 25
+}
+
+### BUSCANDO POR NOME - AULA 08
+GET localhost:8080/produtos?nome=Pendrive

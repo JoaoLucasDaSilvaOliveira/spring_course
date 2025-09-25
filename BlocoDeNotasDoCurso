@@ -1,0 +1,56 @@
+Annotations e seus significados:
+
+@GetMapping -> mapeia a url necessária para chegar na função em específica
+Obs.: Caso não tenha nada nos params, retorna no root da pagina
+Ex.: url pai: sistemasunificados.com.br
+* @GetMapping("/api/produtos"); -> retorna no path: sistemasunificados.com.br/api/produtos
+* @GetMapping(""); -> retorna no path: sistemasunificados.com.br
+
+@RestController -> Combina as annotations @Controller e @ResponseBody
+- @Controller: Marca uma classe como um controlador no Spring MVC, ou seja, uma classe que lida com requisições HTTP recebidas. Ele é responsável por processar as requisições e devolver uma resposta.
+-@ResponseBody: Serializa a resposta diretamente no corpo da resposta.
+
+@RequestMapping: Podemos entender como se fosse o pai do @Get/Post/Put/Patch/DeleteMapping. Ele aceita qualquer tipo de requisição e podemos definir espefícias.
+Ex.:
+* @RequestMapping("/produtos")
+* @RequestMapping (value = "/produtos", method = RequestMethod.POST)
+
+@RequestBody -> colocamos quando queremos receber o valor de traduzi-lo algo em nossa applicação.
+Ex.: Aplicação recebe dados via JSON de algum lugar e precisa traduzir isso em um objeto:
+* (Contexto de POST) @RequestBody Produto produto: signigica que vou receber via qualquer coisa (JSON, XML...) os dados e esses dados devem ser traduzidos em uma instância do classe Produto.
+
+@Entity -> declara a classe como uma entidade do banco de dados. O nome dos atributos e o tipo devem ser os mesmos das colunas da tabela
+    - @Column -> colocamos acima dos atributos da entidade. Obs.: usa-se caso o nome do atributo seja diferente do nome do banco.
+    * @Column (name = "id") private Long identificador. Observe que é diferente os nomes;
+    - @Table -> serve como o column, para quando o nome da tabela é diferente do nome da entidade.
+    - @Id -> sinaliza que o campo é o identificador (PK), da entidade
+
+@RequiredArgsConstructor -> annotation da dependência lombok. Faz com que todos os atributos final tenham um construtor, sem você precisar declará-los.
+
+@PathVariable -> usamos quando queremos receber um parametro via URL.
+Ex.:
+* getNome(@PathVariable String nome);
+    - Nesse caso faz-se necessário o uso do @GetMapping específico para isso:
+    - @GetMapping (/{nome})
+    Ex. completo:
+    @GetMapping(/{nome})
+public void getNome (@PathVariable("nome") String nome). Observe que caso o que for explicitado no mapping seja igual ao que se espera no método, o uso dos ("") é opcional!
+
+@RequestParam -> usamos quando queremos um query param na nossa url.
+Ex.:
+* GET localhost:8080/produtos?nome=algumNome
+    - No código: public Produto getNome (@RequestParam String nome){...}
+
+//////////////////////////////////////////////////////////////////////
+
+Configurações do Spring: arquivo application.properties ou application.yml (só muda a sintaxe):
+
+spring.application.name: nome da aplicação. Ex.: Produtos API
+
+spring.datasource.url: url do banco de dados. Ex.: jdbc:h2:mem:produtos
+spring.datasource.username: nome do user do banco. Ex.: joao
+spring.datasource.password: senha cadastrada para certo user. Ex.: 1304
+spring.jpa.database-platform: dialeto/driver do banco. Ex.: org.hibernate.dialect.H2Dialect
+//ESPECÍFICO DO H2
+spring.h2.console.enabled: habilita o console web do h2. Ex.: true/false
+spring.h2.console.path: caminho web para o console web. Ex.: /h2-bd
