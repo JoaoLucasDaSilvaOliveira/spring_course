@@ -1,0 +1,19 @@
+### PROJETO MONTADORA - TESTANDO O LIGAR CARRO
+POST localhost:8080/carros
+Content-Type: application/json
+
+{
+  "tipo": "Canivete",
+  "montadora": "HONDA"
+}
+
+### PROJETO TODO - ADICIONANDO TODO
+POST localhost:8080/todo
+Content-Type: application/json
+
+{
+  "descricao": "Aplicação em java"
+}
+
+### PROJETO TODO - MUDANDO O ESTADO POR ID
+POST localhost:8080/todo/1

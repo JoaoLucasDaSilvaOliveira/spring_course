@@ -13,10 +13,17 @@
         </processorPath>
         <module name="ProdutosAPI" />
       </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ArquiteturaSpring" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ArquiteturaSpring" options="-parameters" />
       <module name="ProdutosAPI" options="-parameters" />
     </option>
   </component>

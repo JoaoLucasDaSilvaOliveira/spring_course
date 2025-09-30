@@ -41,6 +41,26 @@ Ex.:
 * GET localhost:8080/produtos?nome=algumNome
     - No código: public Produto getNome (@RequestParam String nome){...}
 
+@Component: classe que age como um compontente no Spring container
+    - @Service: classe que contem a regra de negócio / lógica da aplicação.
+    - @Controller
+    - @Repository
+
+@Scope: define escopos dos Beans da aplicação.
+    *INDEPENDENTE O TIPO DO PROJETO
+        - @Scope ("singleton"): escopo padrão da aplicação. Usa uma instância para todas as requisições, cria apenas uma vez o objeto e usa durante toda a vida da execução; //MELHOR EM APIS QUE SÃO APENAS RETORNOS E CONSULTAS NO BD
+        - @Scope ("prototype"): cria instâncias a cada request e a cada usuário, contrário do singleton.
+    * PARA PROJETOS WEB
+        - @Scope ("request"): cria uma instância dos objetos a cada request, não salva estado. // MELHOR EM PROJETOS QUE PRECISEM DE INFORMAÇÕES DESCARTÁVEIS DE USUARIO
+        - @Scope ("session"): cria as instâncias de acordo com a sessão do usuário, salva temporariamente o estado da aplicação. // MELHOR EM PROJETOS QUE PRECISEM DE INFORMAÇÕES DURÁVEIS DE USUARIO
+        - @Scope ("Application"): cria uma instância/variavel que serve para todos os aplicações web
+    *Enums úteis
+        - @Scope (BeanDefinition.SCOPE_PROTOTYPE)
+        - @Scope (BeanDefinition.SCOPE_SINGLETON)
+        - @Scope (WebApplicationContext.SCOPE_APPLICATION)
+        - @Scope (WebApplicationContext.SCOPE_REQUEST)
+        - @Scope (WebApplicationContext.SCOPE_SESSION)
+
 //////////////////////////////////////////////////////////////////////
 
 Configurações do Spring: arquivo application.properties ou application.yml (só muda a sintaxe):
@@ -54,3 +74,20 @@ spring.jpa.database-platform: dialeto/driver do banco. Ex.: org.hibernate.dialec
 //ESPECÍFICO DO H2
 spring.h2.console.enabled: habilita o console web do h2. Ex.: true/false
 spring.h2.console.path: caminho web para o console web. Ex.: /h2-bd
+
+////////////////////////////////////////////////////////////////////////////////
+Arquitetura do Spring:
+
+-Injeção de dependências:
+* Bean: trata-se de um formato de classe. Ela deve conter um construtor default (vazio), getters e setters para todos os atributos, pois dessa forma colocamos a responsabilidade de instanciar a classe para o framework.
+* @Configuration: Trata-se de uma annotation que permite que a classe configure a injeção de dependências, utilizase com o
+@Bean:
+    * @Bean: classe de fato que será injetada pelo spring. É uma pré-configuração de injeção de dependência.
+* @Qualifier: usamos quando há vários beans candidatos a serem injetados. Assim dizemos qual queremos injetar.
+    Ex.: @Bean ("carroAspirado") public ...(...){...}; @Bean ("carroTurbo") public ...(...){...}; -> Qualifier (name="carroAspirado");
+* @Primary: usamos junto com o @Bean para dizer que aquele será a injeção padrão
+* Annotations personalizadas com @Qualifiers específicos: Podemos criar annotations com qualifiers injetados.
+
+//////////////////////////////////////////////////////////////////////////////////
+Informações Interessantes:
+- Quando for o tratamento de erro de uma requisição Http: ResponseStatus(HttpStatus.TIPODOERRO, e.getMessage());
