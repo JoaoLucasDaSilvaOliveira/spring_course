@@ -1,5 +1,6 @@
 package cursospring.arquiteturaspring;
 
+import cursospring.arquiteturaspring.todos.Example;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +22,10 @@ public class Application {
         applicationBuilder.run(args);
 
         ConfigurableApplicationContext context = applicationBuilder.context(); //contexto da aplicação
+
+        Example example = context.getBean(Example.class);
+
+        example.imprimirVar();
 
         //var produtoRepository = context.getBean("produtoRepository");// obtem um bean por nome
 

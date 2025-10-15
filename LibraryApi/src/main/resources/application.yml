@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: LibraryApi
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  ###FAZENDO COM QUE O APP CRIE AS TABELAS SE NÃO EXISTIREM
+  jpa:
+    hibernate:
+      # ddl-auto: update
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate.hibernate.format_sql: true
+

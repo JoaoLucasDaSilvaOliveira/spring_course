@@ -1,0 +1,12 @@
+### 1 - CADASTRAR NOVO AUTOR
+POST localhost:8080/autores
+Content-Type: application/json
+
+{
+  "nome": "Zezinho",
+  "nacionalidade": "brasileiro",
+  "dataNascimento": "2004-04-13"
+}
+
+### 2 - OBTER AUTOR POR ID
+GET localhost:8080/autores/1

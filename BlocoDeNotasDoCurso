@@ -61,6 +61,17 @@ Ex.:
         - @Scope (WebApplicationContext.SCOPE_REQUEST)
         - @Scope (WebApplicationContext.SCOPE_SESSION)
 
+@Value: permite utilizar as properties setadas no arquivo de application.properties/.yml. A sintaxe é a mesma que a de leitura de arquivos .env
+Ex.: Usando em propriedades
+* @Value (${spring.application.name})
+  private String appName;
+Ex.: usando em metodos
+* public void printAppName (@Value(${spring.aaplication.name}) String appName){
+    System.out.println(appName);
+}
+-Podemos configurar classes também usando as propriedades do sistema, observe:
+
+
 //////////////////////////////////////////////////////////////////////
 
 Configurações do Spring: arquivo application.properties ou application.yml (só muda a sintaxe):
@@ -91,3 +102,7 @@ Arquitetura do Spring:
 //////////////////////////////////////////////////////////////////////////////////
 Informações Interessantes:
 - Quando for o tratamento de erro de uma requisição Http: ResponseStatus(HttpStatus.TIPODOERRO, e.getMessage());
+- Lazy Beans (@Lazy): trata-se de uma forma de gerenciar os beans de forma atrasada. Por padrão o lazy, enquanto build de todo o projeto é false, entretanto podemos definir lazy em escopo de classe ou de projeto inteiro.
+    - Em escopo de classe @Lazy
+    - Em escopo de projeto -> application.properties -> spring.main.lazy-initialization=true/false
+               ou          -> (classe instanciada) SpringApplicationBuilder sab.lazyInitialization(true/false)

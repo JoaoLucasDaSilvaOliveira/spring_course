@@ -1,0 +1,31 @@
+### RODAR CONTAINER POSTGRES v 16.3
+docker run --name librarydb -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library -p 5432:5432 postgres:16.3
+
+### RODAR CONTAINER PGADMIN4 v
+docker run --name pgadmin4 -e PGADMIN_DEFAULT_EMAIL=jlso9866@gmail.com -e PGADMIN_DEFAULT_PASSWORD=senha -p 15432:80 dpage/pgadmin4:8.9
+
+- PROBLEMA: PRECISAMOS FAZER OS CONTAINER SE CONVERSAREM, PARA ISSO PRECISAMOS DE UMA NETWORK
+
+### REMOVER OS CONTAINER PARA PODER CONECTÁ-LOS A NETWORK
+
+docker container rm librarydb
+docker container rm pdadmin4
+
+### CRIAR A NETWORK
+
+docker network create library-network
+
+### CRIAR OS CONTAINERS AGR LINKADOS COM A NETWORK
+
+docker run --name librarydb -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library -p 5432:5432
+--network library-network postgres:16.3
+docker run --name pgadmin4 -e PGADMIN_DEFAULT_EMAIL=jlso9866@gmail.com -e PGADMIN_DEFAULT_PASSWORD=senha -p 15432:80 --network library-network dpage/pgadmin4:8.9
+
+### PARA PODER FECHAR A ABA E CONTINUAR RODANDO O CONTAINER ADICIONAR A FLAG -d nos comandos acima
+
+### COMANDO PARA CHECAGEM DE PORTAS
+netstat -aof
+netstat -aof | findstr 5432 (procura pela porta 5432)
+
+### COMANDO PARA DAR STOP EM TODOS OS CONTAINERS ATIVOS (CMD)
+docker stop $(docker ps -q)
