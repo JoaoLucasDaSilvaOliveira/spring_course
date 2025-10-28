@@ -3,10 +3,70 @@ POST localhost:8080/autores
 Content-Type: application/json
 
 {
-  "nome": "Zezinho",
+  "nome": "Jose",
   "nacionalidade": "brasileiro",
   "dataNascimento": "2004-04-13"
 }
 
 ### 2 - OBTER AUTOR POR ID
 GET localhost:8080/autores/1
+
+### 3 - DELETAR AUTOR POR ID
+DELETE localhost:8080/autores/0d8fdaf5-fe68-4772-a974-ea59a6b086f6
+
+### 4 - OBTER TODOS OS AUTORES
+GET localhost:8080/autores
+
+### 5 - OBTER AUTORES COM FILTRO POR NOME E/OU NACIONALIDADE
+GET localhost:8080/autores?nacionalidade=brasileiro
+###&nome=Zezinho
+
+### 6 - ATUALIZANDO O AUTOR
+PUT localhost:8080/autores/94449ac7-0ae5-478c-bcf9-ee8e7f884286
+Content-Type: application/json
+
+{
+  "nome": "Julia",
+  "dataNascimento": "2004-04-13",
+  "nacionalidade": "brasileiro"
+}
+
+### 7 - EXLUINDO O AUTOR
+DELETE localhost:8080/autores/5842e4f3-363d-460d-a07f-c349f2d95004
+
+### 8 - CRIANDO UM NOVO LIVRO
+POST localhost:8080/livros
+Content-Type: application/json
+
+{
+  "isbn": "978-65-80000-00-5",
+  "titulo": "Livro 2 Via API",
+  "dataPublicacao": "2010-10-10",
+  "genero": "FANTASIA",
+  "preco": "30.0",
+  "idAutor": "94449ac7-0ae5-478c-bcf9-ee8e7f884286"
+}
+
+### 9 - OBTER LIVROS
+GET localhost:8080/livros/d1bf39be-66ea-40b4-a702-a00ed2245639
+
+### 10 - OBTER LIVROS COM FILTRO
+GET localhost:8080/livros
+Authorization: Basic user 57ae6943-fe01-4c0f-a385-fc91101e025f ###incluso com o módulo de segurança
+#               ^     ^           ^
+#            forma  usuario     senha
+#              de             temporária
+#       autenticação    (gerada pelo sistema no primeiro momento)
+
+### 11 - ATUALIZAR LIVRO
+PUT localhost:8080/livros/d1bf39be-66ea-40b4-a702-a00ed2245639
+Content-Type: application/json
+
+{
+  "titulo": "Livro Via API Atualizado",
+  "preco": 10.99,
+  "isbn": "118-3-16-148410-0",
+  "idAutor": "94449ac7-0ae5-478c-bcf9-ee8e7f884286",
+  "genero": "FANTASIA",
+  "dataPublicacao": "2000-10-10"
+}

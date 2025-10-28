@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.Year;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,12 +26,14 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     //query com parametros
     // Named Parameters: nomeamos os parametros como se fosse variáveis (utiliza-se a seguinte anotação para se referir a parametros -> :nomeDoParam)
     //  OBSERVE: aqui foi utilizado o nativeQuery = true. O default é false, observe o ex seguinte
-        @Query(
-                value = """
-                    SELECT * FROM Livro l WHERE l.titulo ILIKE %:titulo%
+    @Query(
+            value = """
+        SELECT * 
+        FROM livro l 
+        WHERE l.titulo ILIKE CONCAT('%', :titulo, '%')
     """,
-                nativeQuery = true
-        )
+            nativeQuery = true
+    )
     List<Livro> listarLivrosPorTituloSemCase (@Param(value = "titulo") String titulo);
 
     /* OBSERVE: nesse caso aqui nós não declaramos nativeQuery como true, então utilizamos a linguagem do JPQL onde:
@@ -53,6 +56,20 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
             """
     )
     List<Livro> listarLivrosPorGeneroOrdenado (GeneroLivro generoLivro, String nomeOrdenacao);
+
+    @Query (
+            value = """
+                SELECT l, l.autor.nome, l.autor.dataNascimento, l.autor.nacionalidade FROM Livro l JOIN l.autor a WHERE (UPPER(a.nome) = UPPER(?1) OR EXTRACT(YEAR FROM l.dataPublicacao) = ?2)
+            """
+    )
+    List<Livro> obterLivroPorNomeAutor (String nomeAutor, int anoPublicacao);
+
+
+    boolean existsLivroByIsbnIgnoreCaseOrTituloIgnoreCase(String isbn, String titulo);
+
+    List<Livro> findLivroByIsbnIgnoreCaseOrTituloIgnoreCaseOrGenero(String isbn, String titulo, GeneroLivro genero);
+
+    boolean existsLivroByIsbnIgnoreCase(String isbn);
 
     //OBS!!!: Para ações de escrita no banco, precisa, além do @Query, de mais duas annotations: @Modifying e @Transactional.
     //  - @Modifying: sinaliza que uma modificação ocorrerá

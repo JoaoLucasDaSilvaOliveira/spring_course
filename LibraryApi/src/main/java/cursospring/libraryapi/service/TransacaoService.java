@@ -16,7 +16,7 @@ import java.util.ArrayList;
 @Service
 public class TransacaoService {
 
-    /*@Autowired
+    @Autowired
     private AutorRepository autorRepository;
 
     @Autowired
@@ -70,7 +70,10 @@ public class TransacaoService {
                 "Julia",
                 LocalDate.of(1999, 6, 30),
                 "Japonesa",
-                new ArrayList<>()
+                new ArrayList<>(),
+                null,
+                null,
+                null
         );
         a.getLivros().add(new Livro(
                 null,
@@ -79,7 +82,10 @@ public class TransacaoService {
                 LocalDate.of(2010, 8, 15),
                 GeneroLivro.BIOGRAFIA,
                 BigDecimal.valueOf(15.90),
-                a
+                a,
+                null,
+                null,
+                null
         ));
         autorRepository.save(a);
         //ao lançar um erro ocorre o rollback da transação
@@ -95,7 +101,10 @@ public class TransacaoService {
                 "Robertinho",
                 LocalDate.of(1999, 6, 30),
                 "Chinês",
-                new ArrayList<>()
+                new ArrayList<>(),
+                null,
+                null,
+                null
         );
         a.getLivros().add(new Livro(
                 null,
@@ -104,7 +113,10 @@ public class TransacaoService {
                 LocalDate.of(2010, 8, 15),
                 GeneroLivro.BIOGRAFIA,
                 BigDecimal.valueOf(15.90),
-                a
+                a,
+                null,
+                null,
+                null
         ));
         autorRepository.saveAndFlush(a);
         //ao lançar um erro ocorre o rollback da transação
@@ -114,7 +126,7 @@ public class TransacaoService {
         //cancela pq o final da transação só ocorre ao final da transação (final da função)!
     }
 
-    */
+
 
     // OBS!!! Ao atualizar um objeto vindo do banco (UPDATE), não precisa salvar dnovo pois o conceito de transação compreende isso.
     /** Ex.:

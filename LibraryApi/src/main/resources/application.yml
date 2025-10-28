@@ -8,7 +8,7 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
 
-  ###FAZENDO COM QUE O APP CRIE AS TABELAS SE NÃO EXISTIREM
+  ###FAZENDO COM QUE O APP CRIE AS TABELAS SE NAO EXISTIREM
   jpa:
     hibernate:
       # ddl-auto: update

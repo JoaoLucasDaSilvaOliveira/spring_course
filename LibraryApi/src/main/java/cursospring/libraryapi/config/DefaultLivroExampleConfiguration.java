@@ -15,14 +15,14 @@ import java.util.NoSuchElementException;
 @Configuration
 public class DefaultLivroExampleConfiguration {
 
-    /*@Autowired
+    @Autowired
     AutorRepository repository;
-    private String authorName = "Sr Jose Ruela";
+    private String authorName = "Jose Ruela";
 
     @Bean
     public Livro livro (){
-        Autor autor = repository.findAutorByNome(authorName).getFirst();
-        if(autor != null){
+        //Autor autor = repository.findAutorByNome(authorName).getFirst();
+        //if(autor != null){
             return new Livro(
                     null,
                     "978-85-333-0400-5",
@@ -30,10 +30,13 @@ public class DefaultLivroExampleConfiguration {
                     LocalDate.of(2015, 5, 10),
                     GeneroLivro.FANTASIA,
                     BigDecimal.valueOf(59.90),
-                    autor
+                    null,
+                    null,
+                    null,
+                    null
             );
-        }
-        throw new NoSuchElementException("Não há nenhum autor cadastrado com esse nome: "+authorName);
-    }*/
+        //}
+        //throw new NoSuchElementException("Não há nenhum autor cadastrado com esse nome: "+authorName);
+    }
 
 }

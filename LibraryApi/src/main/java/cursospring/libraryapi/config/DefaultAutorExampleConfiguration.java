@@ -1,24 +1,35 @@
 package cursospring.libraryapi.config;
 
 import cursospring.libraryapi.model.Autor;
+import cursospring.libraryapi.model.Livro;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 @Configuration
 public class DefaultAutorExampleConfiguration {
-    /*@Bean
+
+    @Autowired
+    Livro livro;
+
+    @Bean
     public Autor autor () {
-        return new Autor(
+
+        Autor autor = new Autor(
                 null,
                 "Jose Ruela",
                 LocalDate.of(2000, 12, 15),
                 "Brasileiro",
-                new ArrayList<>()
+                new ArrayList<>(),
+                null,
+                null,
+                null
         );
-    }*/
+        livro.setAutor(autor);
+        autor.getLivros().add(livro);
+        return autor;
+    }
 }

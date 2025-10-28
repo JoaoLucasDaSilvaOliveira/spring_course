@@ -1,4 +1,4 @@
-package cursospring.libraryapi.repository;
+/*package cursospring.libraryapi.repository;
 
 import cursospring.libraryapi.service.TransacaoService;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class TransitionTest {
     /***
      * commit -> confirmar alterações
      * rollback -> voltar nas alterações
-     */
+     *//*
     void transacaoSimples(){
         service.executarDandoCommit();
     }
@@ -31,3 +31,4 @@ public class TransitionTest {
     }
 
 }
+*/

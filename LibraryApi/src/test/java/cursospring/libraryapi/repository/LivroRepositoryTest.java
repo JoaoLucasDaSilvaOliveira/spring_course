@@ -3,6 +3,7 @@ package cursospring.libraryapi.repository;
 import cursospring.libraryapi.model.Autor;
 import cursospring.libraryapi.model.GeneroLivro;
 import cursospring.libraryapi.model.Livro;
+import cursospring.libraryapi.service.LivroService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Year;
 
 @SpringBootTest
 public class LivroRepositoryTest {
@@ -19,6 +21,9 @@ public class LivroRepositoryTest {
 
     @Autowired
     Livro livro;
+
+    @Autowired
+    LivroService service;
 
     @Test
     public void saveLivro (){
@@ -32,6 +37,9 @@ public class LivroRepositoryTest {
                 "Maria",
                 LocalDate.of(2004, 10, 10),
                 "Estadounidense",
+                null,
+                null,
+                null,
                 null
         );
         //observe que com o cascade, eu não vou salvar no banco primeiro o autor e depois passar para o livro
@@ -42,7 +50,10 @@ public class LivroRepositoryTest {
                 LocalDate.of(2012, 12, 12),
                 GeneroLivro.CIENCIA,
                 BigDecimal.valueOf(99.90),
-                autor
+                autor,
+                null,
+                null,
+                null
         ));
     }
 
@@ -75,5 +86,15 @@ public class LivroRepositoryTest {
     @Test
     void queryPersonalizadaBuscaPorGeneroOrdenada(){
         repository.listarLivrosPorGeneroOrdenado(GeneroLivro.CIENCIA, "dataPublicacao").forEach(System.out::println);
+    }
+
+    @Test
+    void queryPersonalizadaFiltro (){
+        repository.obterLivroPorNomeAutor("JULI", 2000).forEach(livro->System.out.println(livro.getAutor().getNome()));
+    }
+
+    @Test
+    void testeServiceFiltro (){
+        service.obterLivrosFiltro(null,null,null,null,Year.of(2000)).forEach(System.out::println);
     }
 }

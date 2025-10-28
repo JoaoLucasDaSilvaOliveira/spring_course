@@ -51,7 +51,7 @@ public class Autor {
     private String nacionalidade;
 
     @OneToMany(
-            mappedBy = "Autor",
+            mappedBy = "autor",
             cascade = CascadeType.ALL
     )// forma de mapear os livros que ele possui
     private List<Livro> livros;
@@ -71,6 +71,6 @@ public class Autor {
     @Column(
             name = "id_usuario"
     )
-    private LocalDateTime idUsuario;
+    private UUID idUsuario;
 
 }
