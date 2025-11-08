@@ -9,10 +9,10 @@ import cursospring.libraryapi.model.Autor;
 import cursospring.libraryapi.model.GeneroLivro;
 import cursospring.libraryapi.model.Livro;
 import cursospring.libraryapi.repository.LivroRepository;
+import cursospring.libraryapi.security.SecurityService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -25,6 +25,7 @@ public class LivroService {
     private final LivroRepository repository;
     private final AutorService autorService;
     private final LivroMapper mapper;
+    private final SecurityService securityService;
 
     public Livro mapearParaLivro(LivroDTO livroDTO) throws DuplicadoException {
         if (livroDTO.dataPublicacao().isAfter(LocalDate.of(2020,1,1)) && livroDTO.preco() == null){
@@ -42,7 +43,8 @@ public class LivroService {
         return livro;
     }
 
-    public void saveLivro (Livro livro){
+    public void saveLivro (Livro livro, Authentication auth){
+        livro.setUsuario(securityService.obterUsuarioPorAuth(auth));
         repository.save(livro);
     }
 
@@ -99,7 +101,7 @@ public class LivroService {
             newLivro.setId(oldLivro.get().getId());
             newLivro.setAutor(oldLivro.get().getAutor());
             newLivro.setDataCadastro(oldLivro.get().getDataCadastro());
-            newLivro.setIdUsuario(oldLivro.get().getIdUsuario());
+            newLivro.setUsuario(oldLivro.get().getUsuario());
             repository.save(newLivro);
         } else if (hasIsbn(dto.isbn())) {
             throw new DuplicadoException("ISBN já cadastrado");
@@ -108,7 +110,7 @@ public class LivroService {
             newLivro.setId(oldLivro.get().getId());
             newLivro.setAutor(oldLivro.get().getAutor());
             newLivro.setDataCadastro(oldLivro.get().getDataCadastro());
-            newLivro.setIdUsuario(oldLivro.get().getIdUsuario());
+            newLivro.setUsuario(oldLivro.get().getUsuario());
             repository.save(newLivro);
         }
     }

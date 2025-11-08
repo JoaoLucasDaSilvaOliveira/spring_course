@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -96,5 +98,13 @@ public class LivroRepositoryTest {
     @Test
     void testeServiceFiltro (){
         service.obterLivrosFiltro(null,null,null,null,Year.of(2000)).forEach(System.out::println);
+    }
+
+    @Test
+    void testeDeEncoding (){
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+//        System.out.println(encoder.encode("joao"));
+        System.out.println(encoder.matches("joao", "$2a$10$aoYaqyyEtZMB27eXbAQ/KeJiXygjnxG/NOUPShB6jGyb2ydTgPOI2"));;
+        //$2a$10$aoYaqyyEtZMB27eXbAQ/KeJiXygjnxG/NOUPShB6jGyb2ydTgPOI2
     }
 }

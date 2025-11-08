@@ -28,3 +28,12 @@ CREATE TABLE livro (
 
 DROP TABLE autor;
 DROP TABLE livro;
+
+CREATE TABLE usuario (
+    id UUID PRIMARY KEY,
+    login VARCHAR(20) NOT NULL,
+    senha VARCHAR(300) NOT NULL,
+    roles VARCHAR[],
+
+    CONSTRAINT uniq_senha UNIQUE (login)
+);

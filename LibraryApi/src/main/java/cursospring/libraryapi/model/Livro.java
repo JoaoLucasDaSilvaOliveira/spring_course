@@ -79,10 +79,14 @@ public class Livro {
     @LastModifiedDate
     private LocalDateTime dataAtualizacao;
 
-    @Column(
-            name = "id_usuario"
-    )
-    private UUID idUsuario;
+//    @Column(
+//            name = "id_usuario"
+//    )
+//    private UUID idUsuario;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
     @Override
     public String toString() {
@@ -99,11 +103,11 @@ public class Livro {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Livro livro)) return false;
-        return Objects.equals(id, livro.id) && Objects.equals(isbn, livro.isbn) && Objects.equals(titulo, livro.titulo) && Objects.equals(dataPublicacao, livro.dataPublicacao) && genero == livro.genero && Objects.equals(preco, livro.preco) && Objects.equals(dataCadastro, livro.dataCadastro) && Objects.equals(dataAtualizacao, livro.dataAtualizacao) && Objects.equals(idUsuario, livro.idUsuario);
+        return Objects.equals(id, livro.id) && Objects.equals(isbn, livro.isbn) && Objects.equals(titulo, livro.titulo) && Objects.equals(dataPublicacao, livro.dataPublicacao) && genero == livro.genero && Objects.equals(preco, livro.preco) && Objects.equals(dataCadastro, livro.dataCadastro) && Objects.equals(dataAtualizacao, livro.dataAtualizacao) && Objects.equals(usuario, livro.getUsuario());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isbn, titulo, dataPublicacao, genero, preco, dataCadastro, dataAtualizacao, idUsuario);
+        return Objects.hash(id, isbn, titulo, dataPublicacao, genero, preco, dataCadastro, dataAtualizacao, usuario);
     }
 }

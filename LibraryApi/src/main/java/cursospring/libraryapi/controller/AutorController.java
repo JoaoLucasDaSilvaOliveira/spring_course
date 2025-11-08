@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,9 +26,10 @@ public class AutorController {
     private AutorService service;
 
     @PostMapping
-    public ResponseEntity<?> cadastrarAutor(@RequestBody @Valid  AutorDTO autor){
+    @PreAuthorize("hasRole('GERENTE')")
+    public ResponseEntity<?> cadastrarAutor(@RequestBody @Valid  AutorDTO autor, Authentication auth){
         try{
-            UUID idSalvo = service.salvar(autor);
+            UUID idSalvo = service.salvar(autor, auth);
             //retornar uri do autor criado
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -54,6 +57,7 @@ public class AutorController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('GERENTE')")
     public ResponseEntity<?> excluirAutor (@PathVariable String id){
         try{
             service.excluirPorId(UUID.fromString(id));
@@ -74,6 +78,7 @@ public class AutorController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('OPERADOR, GERENTE')")
     public ResponseEntity<List<AutorDTO>> obterAutorComFiltro(
             //como eh um filtro, tudo pode ser não requerido
         @RequestParam (value = "nome", required = false) String nome,
@@ -101,6 +106,7 @@ public class AutorController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('GERENTE')")
     public ResponseEntity<?> atualizarAutor (
             @PathVariable String id,
             @RequestBody @Valid AutorDTO autorDTO

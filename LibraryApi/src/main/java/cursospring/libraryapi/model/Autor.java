@@ -68,9 +68,13 @@ public class Autor {
     @LastModifiedDate
     private LocalDateTime dataAtualizacao;
 
-    @Column(
-            name = "id_usuario"
-    )
-    private UUID idUsuario;
+//    @Column(
+//            name = "id_usuario"
+//    )
+//    private UUID idUsuario;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
 }

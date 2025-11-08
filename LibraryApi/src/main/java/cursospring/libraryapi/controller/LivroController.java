@@ -6,14 +6,13 @@ import cursospring.libraryapi.model.GeneroLivro;
 import cursospring.libraryapi.model.Livro;
 import cursospring.libraryapi.service.LivroService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.hibernate.validator.constraints.ISBN;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,10 +33,11 @@ public class LivroController {
     private final LivroService service;
 
     @PostMapping
-    public ResponseEntity<?> criarLivro(@RequestBody @Valid LivroDTO dto){
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
+    public ResponseEntity<?> criarLivro(@RequestBody @Valid LivroDTO dto, Authentication auth){
         try{
             Livro livro = service.mapearParaLivro(dto);
-            service.saveLivro(livro);
+            service.saveLivro(livro, auth);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -57,6 +57,7 @@ public class LivroController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<?> procurarLivro(@PathVariable String id){
         try{
             UUID idAutor = UUID.fromString(id);
@@ -73,6 +74,7 @@ public class LivroController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<?> deletarLivro (@PathVariable String id){
         try{
             UUID idAutor = UUID.fromString(id);
@@ -88,6 +90,7 @@ public class LivroController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<?> obterLivroFiltro (
             @ISBN (message = "Forneça um ISBN válido")
             @RequestParam(required = false) String isbn,
@@ -110,6 +113,7 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<?> atualizarLivro (@RequestBody AtualizarLivroDTO dto, @PathVariable String id) {
         try{
             UUID idLivro = UUID.fromString(id);

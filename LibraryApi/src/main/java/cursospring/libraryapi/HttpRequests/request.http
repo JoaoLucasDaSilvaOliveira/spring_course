@@ -1,11 +1,12 @@
 ### 1 - CADASTRAR NOVO AUTOR
 POST localhost:8080/autores
 Content-Type: application/json
+Authorization: Basic Dev local
 
 {
-  "nome": "Jose",
-  "nacionalidade": "brasileiro",
-  "dataNascimento": "2004-04-13"
+  "nome": "Mariazinha",
+  "nacionalidade": "Estadunidense",
+  "dataNascimento": "2010-01-10"
 }
 
 ### 2 - OBTER AUTOR POR ID
@@ -52,11 +53,12 @@ GET localhost:8080/livros/d1bf39be-66ea-40b4-a702-a00ed2245639
 
 ### 10 - OBTER LIVROS COM FILTRO
 GET localhost:8080/livros
-Authorization: Basic user 57ae6943-fe01-4c0f-a385-fc91101e025f ###incluso com o módulo de segurança
-#               ^     ^           ^
-#            forma  usuario     senha
-#              de             temporária
-#       autenticação    (gerada pelo sistema no primeiro momento)
+#Authorization: Basic user 57ae6943-fe01-4c0f-a385-fc91101e025f ###incluso com o módulo de segurança
+#                ^     ^           ^
+#             forma  usuario     senha
+#               de             temporária
+#        autenticação    (gerada pelo sistema no primeiro momento)
+Authorization: Basic Dev local
 
 ### 11 - ATUALIZAR LIVRO
 PUT localhost:8080/livros/d1bf39be-66ea-40b4-a702-a00ed2245639
@@ -69,4 +71,17 @@ Content-Type: application/json
   "idAutor": "94449ac7-0ae5-478c-bcf9-ee8e7f884286",
   "genero": "FANTASIA",
   "dataPublicacao": "2000-10-10"
+}
+
+### 12 - CRIANDO UM USUARIO
+POST localhost:8080/usuarios
+Content-Type: application/json
+
+{
+  "login": "Dev",
+  "senha": "local",
+  "email": "jlso9866@gmail.com",
+  "roles": [
+    "USER", "ADMIN", "GERENTE"
+  ]
 }

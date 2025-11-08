@@ -6,7 +6,9 @@ import cursospring.libraryapi.exceptions.AutorComLivrosException;
 import cursospring.libraryapi.exceptions.DuplicadoException;
 import cursospring.libraryapi.model.Autor;
 import cursospring.libraryapi.repository.AutorRepository;
+import cursospring.libraryapi.security.SecurityService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,13 +22,15 @@ public class AutorService {
 
     private AutorRepository repository;
     private AutorMapper mapper;
+    private SecurityService securityService;
 
-    public UUID salvar(AutorDTO dto) throws DuplicadoException {
+    public UUID salvar(AutorDTO dto, Authentication auth) throws DuplicadoException {
         //validação
         if (!verificaAutorDuplicado(dto)){
             throw new DuplicadoException("Já existe um autor com essas características");
         }
         Autor entidadeMapeada = mapper.deDTOPraAutor(dto);
+        entidadeMapeada.setUsuario(securityService.obterUsuarioPorAuth(auth));
         repository.save(entidadeMapeada);
         return entidadeMapeada.getId();
     }
@@ -104,6 +108,5 @@ public class AutorService {
         Example<Autor> example = Example.of(autor, exampleMatcher); cria um exemplo usando o objeto e a configuração de busca
         repository.findAll(example); realiza a procura e retorna uma lista do objeto procurado
      */
-
 }
 
