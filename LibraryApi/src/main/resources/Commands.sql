@@ -37,3 +37,11 @@ CREATE TABLE usuario (
 
     CONSTRAINT uniq_senha UNIQUE (login)
 );
+
+CREATE TABLE client (
+    id UUID PRIMARY KEY,
+    client_id VARCHAR(50) NOT NULL,
+    client_secret VARCHAR(400) NOT NULL,
+    redirect_uri VARCHAR (200) NOT NULL,
+    scope VARCHAR(50)
+);

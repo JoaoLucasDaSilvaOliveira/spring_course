@@ -40,12 +40,8 @@ public class SecurityConfiguration {
                             .loginPage("/login")
                             .successHandler(successHandler);
                 })
+                .oauth2ResourceServer(auth -> auth.jwt(Customizer.withDefaults()))
                 .build();
-    }
-
-    @Bean
-    public PasswordEncoder encoder (){
-        return new BCryptPasswordEncoder(10);
     }
 
 //    @Bean

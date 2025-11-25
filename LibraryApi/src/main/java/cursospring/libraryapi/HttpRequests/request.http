@@ -80,8 +80,20 @@ Content-Type: application/json
 {
   "login": "Dev",
   "senha": "local",
-  "email": "jlso9866@gmail.com",
+  "email": "jlso9867@gmail.com",
   "roles": [
     "USER", "ADMIN", "GERENTE"
   ]
+}
+
+### 13 - CRIANDO UM CLIENT
+POST localhost:8080/clients
+Content-Type: application/json
+Authorization: Basic Dev local
+
+{
+  "clientId": "meu-id",
+  "clientSecret": "client-secret",
+  "redirectURI": "http://localhost:8080/authorized",
+  "scope": "GERENTE"
 }
