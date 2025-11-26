@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestControllerAdvice
@@ -29,6 +30,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ErroReposta handleAccessDeniedException (AccessDeniedException e){
-        return new ErroReposta(HttpStatus.FORBIDDEN.value(), "Acesso Negado", List.of());
+        return new ErroReposta(HttpStatus.FORBIDDEN.value(), "Acesso Negado: "+ Arrays.toString(e.getStackTrace()), List.of());
     }
 }

@@ -90,7 +90,7 @@ public class LivroController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('OPERADOR', 'ROLE_GERENTE')")
     public ResponseEntity<?> obterLivroFiltro (
             @ISBN (message = "Forneça um ISBN válido")
             @RequestParam(required = false) String isbn,
